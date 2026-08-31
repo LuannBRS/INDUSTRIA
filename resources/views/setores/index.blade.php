@@ -1,7 +1,7 @@
 @extends ('layouts.app')
 @section('title', 'title de setores')
 @section('content')
-<h1>Lista de Setores<h1>
+<h1>Lista de Setores para {{Auth::user()->name }}<h1>
 <a class="btn btn-primary" href="{{route('setores.create')}}" role="button">Faz outro</a>
 <table class="table">
     <thead class="table-dark">
@@ -25,6 +25,7 @@
                 <button class="btn btn-danger btn-sm">Joga fora fi</button>
             </form>
 
+            @auth
             <form action="{{route('setores.ativar-desativar', $setor->id)}}" method="post">
                 @csrf
                 @method('PATCH')
@@ -33,6 +34,7 @@
                 {{$setor->ativo ? 'Desativar' : 'Ativar'}}
             </button>
             </form>
+            @endauth
             </td>
             
             

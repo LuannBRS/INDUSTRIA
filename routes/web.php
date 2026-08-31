@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\EquipamentoController;
+use App\Http\Controllers\ChamadoController;
+use App\Http\Controllers\FuncionarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +24,9 @@ Route::middleware('auth')->group(function () {
     route::resource('equipamento', EquipamentoController::class);
     route::patch('/setores/{id}/status', [SetorController::class, 'ativarDesativar'])->name('setores.ativar-desativar');
     
+    Route::middleware('auth')->group(function () {
+    Route::resource('chamados', ChamadoController::class);
+    });
 });
 
 
