@@ -7,9 +7,22 @@ use App\Models\Setor;
 
 class SetorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $setores = Setor::all();
+         $setores = Setor::query();
+        if($request->filled('id')){
+            $setores = Setor::where('id', $request->id)->get();
+        }
+
+        if($request->filled('nome')){
+            $setores = Setor::where('nome','like','%'.$request->nome.'%');
+        }
+
+        if($request->filled('status')){
+            $setores = Setor::where('ativo',$request->status);
+        }
+
+        $setores = $setores->get();
         return view('setores.index', compact('setores'));
     }
 

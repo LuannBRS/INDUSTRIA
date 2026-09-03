@@ -1,7 +1,26 @@
 @extends ('layouts.app')
 @section('title', 'title de setores')
 @section('content')
+<div class="text-center">
 <h1>Lista de Setores para {{Auth::user()->name }}<h1>
+    <form action="{{route('setores.index')}}" method="get">
+        @csrf
+    <div class="d-flex">
+        <label for="">id</label>
+        <input type="text" name="id" id="id">
+        <label for="">nome</label>
+        <input type="text" name="nome" id="nome">
+        <label for="">status</label>
+        <input type="text" name="status" id="status">
+        <select name="status" id="status">
+            <option value=""></option>
+            <option value="1">Ativado</option>
+            <option value="0">Desativado</option>
+        </select>
+        <button class="btn btn-success" type="submit">Buscar</button>
+    </div>
+</form>
+</div>
 <a class="btn btn-primary" href="{{route('setores.create')}}" role="button">Faz outro</a>
 <table class="table">
     <thead class="table-dark">
