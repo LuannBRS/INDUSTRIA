@@ -1,8 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Cadastro de funcionario')
+
+@section('title', 'Cadastro de funcionário')
+
 @section('content')
-<h1>Cadastrar Setor</h1>
-<form action="{{ route('funcionario.store') }}" method="post" class="container mt-4">
+
+<h1>Cadastrar Funcionário</h1>
+
+<form action="{{ route('funcionarios.store') }}" method="post" class="container mt-4">
     @csrf
     <div>
         <label for="" class="form-label">Nome</label>

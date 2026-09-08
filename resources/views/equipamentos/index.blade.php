@@ -10,6 +10,58 @@
     Faz outro
 </a>
 
+<br><br>
+
+<form method="GET" action="{{ route('equipamentos.index') }}">
+
+    <input type="text"
+           name="nome"
+           placeholder="Nome"
+           value="{{ request('nome') }}">
+
+    <select name="status">
+        <option value="">Todos os status</option>
+
+        <option value="ativo"
+            {{ request('status') == 'ativo' ? 'selected' : '' }}>
+            Ativo
+        </option>
+
+        <option value="manutencao"
+            {{ request('status') == 'manutencao' ? 'selected' : '' }}>
+            Manutenção
+        </option>
+
+        <option value="inativo"
+            {{ request('status') == 'inativo' ? 'selected' : '' }}>
+            Inativo
+        </option>
+    </select>
+
+    <select name="setor_id">
+        <option value="">Todos os setores</option>
+
+        @foreach($setores as $setor)
+            <option value="{{ $setor->id }}"
+                {{ request('setor_id') == $setor->id ? 'selected' : '' }}>
+                {{ $setor->nome }}
+            </option>
+        @endforeach
+    </select>
+
+    <input type="text"
+           name="patrimonio"
+           placeholder="Patrimônio"
+           value="{{ request('patrimonio') }}">
+
+    <button type="submit" class="btn btn-primary">
+        Filtrar
+    </button>
+
+</form>
+
+<br>
+
 <table class="table">
 
     <thead class="table-dark">

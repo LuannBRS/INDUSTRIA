@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Setor;
+use Illuminate\Support\Facades\Auth;
 
 class SetorController extends Controller
 {
@@ -37,39 +38,27 @@ class SetorController extends Controller
         return view('setores.create');  
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         Setor::create([
-            'nome' => $request->nome,
-            'criado_por_usuario_id' => Auth::id()
-            ]);
+            'nome' => $request->nome
+    ]);
+
         return redirect()->route('setores.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $setor = Setor::find($id);
         return view ('setores.show',compact('setor'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $setor = Setor::find($id);
         return view ('setores.edit',compact('setor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $setor = Setor::find($id);

@@ -12,6 +12,45 @@
     Cadastrar Funcionário
 </a>
 
+<br><br>
+
+<form method="GET" action="{{ route('funcionarios.index') }}">
+
+    <input type="text"
+           name="nome"
+           placeholder="Nome"
+           value="{{ request('nome') }}">
+
+    <input type="text"
+           name="cargo"
+           placeholder="Cargo"
+           value="{{ request('cargo') }}">
+
+    <select name="setor_id">
+        <option value="">Todos os setores</option>
+
+        @foreach($setores as $setor)
+            <option value="{{ $setor->id }}"
+                {{ request('setor_id') == $setor->id ? 'selected' : '' }}>
+                {{ $setor->nome }}
+            </option>
+        @endforeach
+
+    </select>
+
+    <input type="text"
+           name="matricula"
+           placeholder="Matrícula"
+           value="{{ request('matricula') }}">
+
+    <button type="submit" class="btn btn-primary">
+        Filtrar
+    </button>
+
+</form>
+
+<br>
+
 <table class="table">
 
     <thead class="table-dark">

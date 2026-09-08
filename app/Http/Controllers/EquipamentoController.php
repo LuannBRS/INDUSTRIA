@@ -6,14 +6,60 @@ use App\Models\Equipamento;
 use App\Models\Setor;
 use Illuminate\Http\Request;
 
-class EquipamentoController extends Controller
-{
-    public function index()
+        class EquipamentoController extends Controller
     {
-        $equipamentos = Equipamento::all();
-        return view('equipamentos.index', compact('equipamentos'));
+public function index(Request $request)
+{
+    $equipamentos = Equipamento::where('id', '>', 0);
+
+    if ($request->filled('nome')) {
+        $equipamentos = $equipamentos->where(
+            'nome',
+            'like',
+            '%' . $request->nome . '%'
+        );
     }
 
+    if ($request->filled('status')) {
+        $equipamentos = $equipamentos->where(
+            'status',
+            $request->status
+        );
+    }
+
+    if ($request->filled('setor_id')) {
+        $equipamentos = $equipamentos->where(
+            'setor_id',
+            $request->setor_id
+        );
+    }
+
+    $setorSelecionado = $request->filled('setor_id')
+        ? Setor::find($request->setor_id)
+        : null;
+
+   
+    if ($request->filled('patrimonio')) {
+    $equipamentos = $equipamentos->where(
+        'patrimonio',
+        'like',
+        '%' . $request->patrimonio . '%'
+    );
+}
+
+$equipamentos = $equipamentos->get();
+
+    $setores = Setor::all();
+
+    return view(
+        'equipamentos.index',
+        compact(
+            'equipamentos',
+            'setores',
+            'setorSelecionado'
+        )
+    );
+}
     public function create()
     {
         $setores = Setor::all();

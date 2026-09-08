@@ -8,10 +8,53 @@ use Illuminate\Http\Request;
 
 class FuncionarioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $funcionarios = Funcionario::all();
-        return view('funcionarios.index', compact('funcionarios'));
+        $funcionarios = Funcionario::where('id', '>', 0);
+
+        if ($request->filled('nome')) {
+            $funcionarios = $funcionarios->where(
+                'nome',
+                'like',
+                '%' . $request->nome . '%'
+            );
+        }
+
+        if ($request->filled('cargo')) {
+            $funcionarios = $funcionarios->where(
+                'cargo',
+                $request->cargo
+            );
+        }
+
+        if ($request->filled('setor_id')) {
+            $funcionarios = $funcionarios->where(
+                'setor_id',
+                $request->setor_id
+            );
+        }
+
+        $setorSelecionado = $request->filled('setor_id')
+            ? Setor::find($request->setor_id)
+            : null;
+
+        
+        if ($request->filled('matricula')) {
+            $funcionarios = $funcionarios->where(
+                'matricula',
+                'like',
+                '%' . $request->matricula . '%'
+            );
+        }
+
+        $funcionarios = $funcionarios->get();
+
+        $setores = Setor::all();
+
+        return view(
+            'funcionarios.index',
+            compact('funcionarios', 'setores', 'setorSelecionado')
+        );
     }
 
     public function create()
@@ -28,7 +71,9 @@ class FuncionarioController extends Controller
             'cargo' => 'required',
             'setor_id' => 'required|exists:setores,id'
         ]);
+
         Funcionario::create($request->all());
+
         return redirect()->route('funcionarios.index');
     }
 
@@ -51,13 +96,16 @@ class FuncionarioController extends Controller
             'cargo' => 'required',
             'setor_id' => 'required|exists:setores,id'
         ]);
+
         $funcionario->update($request->all());
+
         return redirect()->route('funcionarios.index');
     }
 
     public function destroy(Funcionario $funcionario)
     {
         $funcionario->delete();
+
         return redirect()->route('funcionarios.index');
     }
 }
