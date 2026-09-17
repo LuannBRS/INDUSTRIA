@@ -8,6 +8,8 @@
     use App\Http\Controllers\FuncionarioController;
     use App\Http\Controllers\OrdemProducaoController;
     use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\UsuarioController;
+    use App\Http\Controllers\TarefaController;
 
 
     Route::get('/', function () {
@@ -24,6 +26,7 @@
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         route::resource('setores', SetorController::class);
         route::resource('funcionarios', FuncionarioController::class);
+        route::resource('usuarios', UsuarioController::class);
         Route::resource('equipamentos', EquipamentoController::class);
         route::patch('/setores/{id}/status', [SetorController::class, 'ativarDesativar'])->name('setores.ativar-desativar');
         Route::resource('manutencoes', ManutencaoController::class)
@@ -35,6 +38,8 @@
         Route::middleware('auth')->group(function () {
         Route::resource('chamados', ChamadoController::class);
         });
+        Route::get('/usuarios/create', [UsuarioController::class, 'create']);
+        Route::resource('tarefa', TarefaController::class);
     });
 
 
