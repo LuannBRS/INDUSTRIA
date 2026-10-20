@@ -38,8 +38,9 @@
         Route::middleware('auth')->group(function () {
         Route::resource('chamados', ChamadoController::class);
         });
-        Route::get('/usuarios/create', [UsuarioController::class, 'create']);
+        
         Route::resource('tarefa', TarefaController::class);
+        Route::put('/tarefa/alterarstatus/{id}', [TarefaController::class, 'alterarstatus'])->name('tarefa.alterarstatus');
     });
 
 

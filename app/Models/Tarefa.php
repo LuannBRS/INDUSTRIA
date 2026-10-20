@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Tarefa extends Model
 {
     protected $table = 'tarefa';
-    protected $fillable = ['descricao', 'nome_setor', 'prioridade', 'status', 'data', 'usuario_id'];
+
+    protected $fillable = [
+        'descricao',
+        'nome_setor',
+        'prioridade',
+        'status',
+        'data',
+        'usuario_id'
+    ];
 
     public $timestamps = false;
 
@@ -16,4 +24,3 @@ class Tarefa extends Model
         return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 }
-
